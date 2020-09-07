@@ -1,0 +1,1 @@
+export const UPDATE_LOCATIONS = 'UPDATE_LOCATIONS'

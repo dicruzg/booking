@@ -1,9 +1,14 @@
 import React from 'react'
+import { connect } from 'react-redux'
 
-const FlyingBooking = (props) => {
+const FlyingBooking = ({ location }) => {
   return (
-    <h1>Booking!!!!</h1>
+    <h1>Booking - { JSON.stringify(location.locations) } </h1>
   )
 }
 
-export default FlyingBooking
+const mapStateToProps = state => ({
+  ...state
+});
+
+export default connect(mapStateToProps)(FlyingBooking)
