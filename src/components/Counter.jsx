@@ -22,17 +22,22 @@ const CounterInput = styled.input`
   border: 1px solid #ccc;
   vertical-align: middle;
   border-radius: 0!important;
-  box-shadow: none; 
+  box-shadow: none;
+  font: 100 1.2rem 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
 `
 
 const Counter = ({ count, setCount }) => {
 
-  const handleIncrement = (event) => {
-    console.log('Increment')
+  const handleIncrement = () => {
+    setCount(count + 1)
   }
 
-  const handleDecrement = (event) => {
-    console.log('Decrement')
+  const handleDecrement = () => {
+    setCount(count - 1)
+  }
+
+  const handleInputValueChanged = (event) => {
+    setCount(event.target.value)
   }
 
   return (
@@ -40,7 +45,7 @@ const Counter = ({ count, setCount }) => {
       {/* Minus Btn */}
       <CounterBtn onClick={ handleDecrement }>-</CounterBtn>
       {/* Counter Input */}
-      <CounterInput value={ count } />
+      <CounterInput value={ count } onChange={handleInputValueChanged} />
       {/* Plus Btn */}
       <CounterBtn onClick={ handleIncrement }>+</CounterBtn>
     </div>

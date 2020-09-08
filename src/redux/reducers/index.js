@@ -1,4 +1,7 @@
 import { combineReducers } from "redux";
-import location from "./location";
 
-export default combineReducers({ location });
+import flightLocation from "./flightLocation";
+import flightMembers from './flightMembers'
+import flightDates from './flightDates'
+
+export default combineReducers({ flightLocation, flightMembers, flightDates });

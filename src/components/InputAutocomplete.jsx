@@ -6,7 +6,7 @@ const AutocompleteListContainer = styled.div`
   width: 100%;
   position: absolute;
   margin-top: 0.1rem;
-  visibility: ${props => props.show ? 'visible': 'hidden' };
+  display: ${props => props.show ? 'block': 'none' };
 `
 
 const AutocompleteList = styled.ul`
@@ -18,10 +18,13 @@ const AutocompleteList = styled.ul`
 
 const AutocompleteListItem = styled.li`
   padding: 1ex .5ex 1ex 1.5rem;
-  &:hover {
-    background: #c00;
-    color: #fff;
-  }
+  cursor: pointer;
+  ${props => props.hoverable 
+    ? `&:hover {
+        background: #c00;
+        color: #fff;
+      }` 
+    : ''}
 `
 
 const AutocompleteListItemLabel = styled.label`
@@ -46,7 +49,7 @@ const AutocompleteListItemTag = styled.span`
   top: 0;
 `
 
-const InputAutocompleteItem = ({ label, tag, onClick }) => {
+export const InputAutocompleteItem = ({ label, tag, hoverable, onClick }) => {
 
   const renderTag = (tag) => {
     return tag 
@@ -54,7 +57,7 @@ const InputAutocompleteItem = ({ label, tag, onClick }) => {
       : null
   }
   return (
-    <AutocompleteListItem onClick={ onClick }>
+    <AutocompleteListItem onClick={ onClick } hoverable={ hoverable }>
       <AutocompleteListItemLabel>
         { label }
       </AutocompleteListItemLabel>
@@ -76,6 +79,7 @@ const InputAutocomplete = ({ items=[{ id:1, label: "Miami", tag: "MI"}], onSelec
               label={ label } 
               tag={ tag } 
               key={ label }
+              hoverable
               onClick={ () => { handleOptionSelected(label) } } />
           )
         })

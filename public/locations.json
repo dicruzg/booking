@@ -1,11 +1,9 @@
 [
   {
-    "id": 1,
     "label": "Miami",
     "tag": "MIA"
   },
   {
-    "id": 2,
     "label": "Sofia",
     "tag": "SOf"
   }

@@ -2,12 +2,12 @@ import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 
 
-import { updateLocations } from './redux/actions'
+import { updateFlightLocations } from './redux/actions'
 
-import FlyingBooking from './components/FlyingBooking.jsx'
+import FlightBooking from './components/FlightBooking.jsx'
 import Locations from './../public/locations.json'
 
-const App = ({ updateLocationsAction }) => {
+const App = ({ updateFlightLocations }) => {
   
   const loadLocations = async () => {
       return Locations
@@ -17,8 +17,7 @@ const App = ({ updateLocationsAction }) => {
     async function updateLocation() {
       try {
         const locations = await loadLocations()
-        console.log(locations)
-        updateLocationsAction(locations)
+        updateFlightLocations(locations)
       } catch (err) {
         console.log(err)
       }
@@ -28,12 +27,12 @@ const App = ({ updateLocationsAction }) => {
   }, [])
 
   return (
-      <FlyingBooking />
+      <FlightBooking />
   )
 }
 
 const mapDispatchToProps = dispatch => ({
-  updateLocationsAction: (payload) => dispatch(updateLocations(payload)),
+  updateFlightLocations: (payload) => dispatch(updateFlightLocations(payload)),
 });
 
 export default connect(null, mapDispatchToProps)(App)

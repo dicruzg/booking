@@ -10,31 +10,33 @@ const CountableItemContainer = styled.div`
 `
 
 const CountableItemHeader = styled.label`
-  font-size: 1.25rem;
-  line-height: 1.2;
+  line-height: 1.3;
   color: #333;
 `
 const CountableItemSubheader = styled.small`
-  font-size: 0.875rem;
   opacity: 0.6;
   display: block;
 `
+
+const CountableItemHeaderContainer = styled.div`
+  padding-right: 1.0rem;
+`
+
 const CountableItem = ({ header, subheader, count, onChange }) => {
 
   const handleCountChange = ( count ) => {
-    console.log('Count Updated to: ', count)
     onChange(count)
   }
   return (
     <CountableItemContainer>
-      <div>
+      <CountableItemHeaderContainer>
         <CountableItemHeader>
           { header}
           <CountableItemSubheader>
             { subheader }
           </CountableItemSubheader>
         </CountableItemHeader>
-      </div>
+      </CountableItemHeaderContainer>
       <Counter count={ count } setCount={ handleCountChange } />
     </CountableItemContainer>
   )

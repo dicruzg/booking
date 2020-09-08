@@ -9,6 +9,7 @@ export const InputContainer = styled.div`
   border: 1px solid rgba(51,51,51, 0.3);
   box-sizing: border-box;
   width: 100%;
+  overflow: hidden;
 `
 
 export const InputLabel = styled.small`
@@ -22,10 +23,10 @@ export const InputLabel = styled.small`
 
 export const InputPlaceholder = styled.label`
   display: block;
-  font-size: 1rem;
   font-size: 1.25rem;
   cursor: pointer;
   line-height: 1.35;
   position: relative;
   padding: 23px 12px 6px;
+  font-weight: 300;
 `
