@@ -1,4 +1,4 @@
-import { UPDATE_LOCATIONS } from './../actionTypes'
+import { UPDATE_LOCATIONS } from '../actionTypes'
 
 const initialState = {
   locations: []
