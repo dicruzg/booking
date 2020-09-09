@@ -10,6 +10,8 @@ export const InputContainer = styled.div`
   box-sizing: border-box;
   width: 100%;
   overflow: hidden;
+  ${props => props.paddingLeft ? `padding-left: ${props.paddingLeft};` : ''}
+  ${props => props.disabled ? 'opacity: 0.3;' : ''}
 `
 
 export const InputLabel = styled.small`

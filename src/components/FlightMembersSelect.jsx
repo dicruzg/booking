@@ -116,18 +116,19 @@ const FlightMemberSelect = ({ flightMembers, updateFlightMembers }) => {
       headerSingular: 'Adult',
       subheader: '12+ years',
       key: 'adults',
+      min: 1
     },
     {
       headerPlural: 'Children',
       headerSingular: 'Children',
       subheader: '2-11 years',
-      key: 'children'
+      key: 'children',
     },
     {
       headerPlural: 'Infants',
       headerSingular: 'Infant',
       subheader: '0-1 years',
-      key: 'infants'
+      key: 'infants',
     }
   ]
 
@@ -140,7 +141,7 @@ const FlightMemberSelect = ({ flightMembers, updateFlightMembers }) => {
 
   // Render the options that will appear in the Flighting Member selector
   const renderOptions = () => categories.map((category) => {
-    const { headerPlural, subheader, key } = category
+    const { headerPlural, subheader, key, min } = category
 
     const count = flightMembers && flightMembers[key] ? flightMembers[key] : 0
     return (
@@ -149,6 +150,7 @@ const FlightMemberSelect = ({ flightMembers, updateFlightMembers }) => {
           header={ headerPlural } 
           subheader={ subheader }
           count={ count }
+          min={ min }
           onChange={ (count) => handleCountChange(key, count) } 
         />
       </CountableOption>

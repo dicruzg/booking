@@ -22,7 +22,7 @@ const CountableItemHeaderContainer = styled.div`
   padding-right: 1.0rem;
 `
 
-const CountableItem = ({ header, subheader, count, onChange }) => {
+const CountableItem = ({ header, subheader, count, onChange, min, max }) => {
 
   const handleCountChange = ( count ) => {
     onChange(count)
@@ -37,7 +37,7 @@ const CountableItem = ({ header, subheader, count, onChange }) => {
           </CountableItemSubheader>
         </CountableItemHeader>
       </CountableItemHeaderContainer>
-      <Counter count={ count } setCount={ handleCountChange } />
+      <Counter count={ count } setCount={ handleCountChange } min={ min } max={ max } />
     </CountableItemContainer>
   )
 }

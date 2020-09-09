@@ -13,6 +13,7 @@ const FlightBookingDatePickerContainer = styled.div`
   display: flex;
   justify-content: flex-start;
   position: relative;
+  width: 100%;
 `
 
 const DatePickerContainer = styled.div`
@@ -42,6 +43,40 @@ const Input = styled.input`
     outline: none !important;
   }
 `
+
+const FlightTypeSwitchContainer = styled.span`
+  position: absolute;
+  width: 2.6rem;
+  height: 1.6rem;
+  top: calc(50% - 0.8rem);
+  left: calc(50% - 1.55rem);
+  overflow: hidden;
+  z-index: 10;
+  border-radius: 1.5rem;
+  border: 0.5px solid rgba(180,180,180, 1);
+  display: flex;
+  justify-content: space-around;
+  box-sizing: border-box;
+`
+
+const FlightTypeSwitch = styled.span`
+  text-align: center;
+  width: 50%;
+  height: 100%;
+  position: relative;
+  top: -0;
+  transition: all 0.5s ease-in-out;
+  cursor: pointer;
+  ${props => {
+    if(props.active) 
+      return `
+        color: #fff;
+        background-color: #c00;
+      `
+    }
+  }
+`
+
 const formatDate = (dt) => {
   let date
   if (dt && dt instanceof Date) {
@@ -53,21 +88,17 @@ const formatDate = (dt) => {
   return date.format('dd DD/MM/YYYY') || ''
 }
 
-const DatePickerInput = ({ date, label, isEnabled, onChange, onFocus }) => {
+const DatePickerInput = ({ date, label, readonly, onFocus }) => {
   const [ dt, setDt ] = useState(formatDate())
 
   useEffect(() => {
     setDt(formatDate(date))
   }, [date])
 
-  
-  const handleInputChange = (date) => {
-    onChange(new Date(date))
-  }
 
   return (
     <FlightBookingDatePickerInputContainer>
-      <Input value={dt} onChange={ handleInputChange } onFocus={ onFocus } />
+      <Input value={dt} onChange={ () => {} } onFocus={ onFocus } readonly={ readonly }/>
       <InputLabel>
         { label }
       </InputLabel>
@@ -78,48 +109,31 @@ const DatePickerInput = ({ date, label, isEnabled, onChange, onFocus }) => {
 const FlightBookingDatePicker = ({ updateFlightDates, updateFlightType, flightDates }) => {
   const { isOneWay, start, end } = flightDates
 
-  const [ startDate, setStartDate ] = useState(new Date())
-  const [ endDate, setEndDate ] = useState(new Date())
-  const [ isRange, setIsRange ] = useState(false)
   const [ showDatepicker, setShowDatepicker ] = useState(false)
 
-  useEffect(() => {
-    if (start) {
-      setStartDate(start)
-    }
-    if (end) {
-      setEndDate(endDate)
-    }
-
-    setIsRange(!isOneWay)
-    
-  }, [flightDates])
-
   const handleStartDateChanged = (date) => {
-    setStartDate(date)
     updateFlightDates({start: date})
   }
 
   const handleEndDateChanged = (date) => {
-    setEndDate(date)
     setShowDatepicker(false)
     updateFlightDates({end: date})
   }
 
-  const startDatePickerProps = isRange 
+  const startDatePickerProps = ! isOneWay 
     ? {
         selectsStart: true,
-        startDate: startDate,
-        endDate: endDate,
+        startDate: start,
+        endDate: end,
         minDate: new Date()
       }
     : {}
 
     const endDatePickerProps = {
       selectsEnd: true,
-      startDate: startDate,
-      endDate: endDate,
-      minDate: startDate
+      startDate: start,
+      endDate: end,
+      minDate: start
     }
 
   return (
@@ -129,21 +143,30 @@ const FlightBookingDatePicker = ({ updateFlightDates, updateFlightType, flightDa
         {/* START DATE */}
         <InputContainer>
           <DatePickerInput 
-            date={startDate} 
-            label={ isRange ? 'Outbound flight' : 'One-way'} 
+            date={start} 
+            label={ isOneWay ? 'One-way' : 'Outbound flight' }
+            readonly
             onFocus={ () => setShowDatepicker(true)} />
         </InputContainer>
+        <FlightTypeSwitchContainer>
+          <FlightTypeSwitch onClick={ () => updateFlightType(true) } active={ isOneWay }>A</FlightTypeSwitch>
+          <FlightTypeSwitch onClick={ () => updateFlightType(false) } active={ !isOneWay }>B</FlightTypeSwitch>
+        </FlightTypeSwitchContainer>
         {/* END DATE */}
-        <InputContainer>
-          <DatePickerInput date={endDate} label="Return Flight" onFocus={ () => setShowDatepicker(true) }/>
+        <InputContainer paddingLeft="1.0rem" disabled={ isOneWay } >
+          <DatePickerInput 
+            date={ end } 
+            label="Return Flight" 
+            readonly
+            onFocus={ isOneWay ? null : () => setShowDatepicker(true) } />
         </InputContainer>
       </FlightBookingDatePickerInputContainer>
 
       {/* HOLD THE DATEPICKERS CALENDARS */}
       <DatePickerContainer show={ showDatepicker }>
-        <DatePicker selected={ startDate } onChange={ handleStartDateChanged } { ...startDatePickerProps } inline />
-        { isRange ? (
-          <DatePicker selected={ endDate } onChange={ handleEndDateChanged } { ...endDatePickerProps } inline/>
+        <DatePicker selected={ start } onChange={ handleStartDateChanged } { ...startDatePickerProps } inline />
+        { !isOneWay ? (
+          <DatePicker selected={ end } onChange={ handleEndDateChanged } { ...endDatePickerProps } inline/>
         ) : null}
       </DatePickerContainer>
     </FlightBookingDatePickerContainer>

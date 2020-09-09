@@ -6,6 +6,7 @@ const AutocompleteListContainer = styled.div`
   width: 100%;
   position: absolute;
   margin-top: 0.1rem;
+  z-index: 99;
   display: ${props => props.show ? 'block': 'none' };
 `
 

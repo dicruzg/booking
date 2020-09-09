@@ -26,18 +26,23 @@ const CounterInput = styled.input`
   font: 100 1.2rem 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
 `
 
-const Counter = ({ count, setCount }) => {
+const Counter = ({ count, setCount, min=0, max=1000 }) => {
 
   const handleIncrement = () => {
-    setCount(count + 1)
+    if (count !== max) {
+      setCount(count + 1)
+    }
   }
 
   const handleDecrement = () => {
-    setCount(count - 1)
+    if (count !== min) {
+      setCount(count - 1)
+    }
   }
 
   const handleInputValueChanged = (event) => {
-    setCount(event.target.value)
+    const count = parseInt(event.target.value)
+    setCount(count === NaN ? 0 : count )
   }
 
   return (

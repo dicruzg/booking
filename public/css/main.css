@@ -19,8 +19,46 @@ input, label, button {
 
 #component-container {
   width: 90%;
-  padding: 1.0rem;
+  padding: 2rem 1rem 2rem 2rem;
   background-color: rgb(220,220,220);
   margin: 0 auto;
   margin-top: 3.0rem;
+}
+.react-datepicker {
+  border-radius: 0;
+  border-width: 0;
+}
+.react-datepicker__day-name {
+  font-size: 0.5rem;
+  font-weight: 500;
+  color: rgba(200,200,200,1)
+}
+.react-datepicker__current-month {
+  font-size: 0.8rem;
+}
+.react-datepicker__header {
+  background-color: #fff;
+  border-bottom: none;
+}
+.react-datepicker__day {
+  border-radius: 0 !important;
+  border: 0.01px solid rgba(200,200,200, 0.5);
+  margin: 0;
+  font-size: 0.6rem;
+  font-weight: 100;
+}
+.react-datepicker__day--today,
+.react-datepicker__day--in-selecting-range,
+.react-datepicker__day--in-range,
+.react-datepicker__day--keyboard-selected {
+  background-color: #c00;
+  opacity: 0.5;
+  color: #fff !important;
+}
+.react-datepicker__day--selected,
+.react-datepicker__day:hover {
+  background-color: #c00c !important;
+  opacity: 1 !important;
+  color: #fff;
+  outline: none !important;
 }

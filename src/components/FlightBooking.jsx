@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
+import moment from 'moment'
 
 import FlightBookingMembersSelect from './FlightMembersSelect.jsx'
 import FlightBookingLocation from './FlightBookingLocation.jsx'
@@ -9,31 +10,38 @@ import FlightBookingDatePicker from './FlightBookingDatePicker.jsx'
 const FlightBookingContainer = styled.div`
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  flex-direction: row;
+  justify-content: stretch;
   align-items: flex-start;
   flex-wrap: wrap;
 `
 
 const FlightBookingLocationContainer = styled.div`
   display: flex;
-  padding-right: 20px;
+  padding-right: 1rem;
+  padding-bottom: 1rem;
+  flex-grow: 1;
 `
 
 const FlightBookingDateRangePickerContainer = styled.div`
   display: flex;
-  padding-right: 20px;
+  padding-right: 1rem;
+  padding-bottom: 1rem;
+  flex-grow: 1;
 `
 
 const FlightBookingMembersSelectContainer = styled.div`
   display: flex;
+  padding-right: 1rem;
+  padding-bottom: 1rem;
+  flex-grow: 1;
 `
 
 const FlightBookingSearchBtnContainer = styled.div`
   display: flex;
-  width: 24%;
-  margin-left: 76%;
+  width: 100%;
   justify-content: flex-end;
-  padding: 1.0rem 0;
+  padding: 0 1rem 0 0;
 `
 
 const FlightBookingSearchBtn = styled.button`
@@ -49,7 +57,9 @@ const FlightBookingSearchBtn = styled.button`
   border-radius: 0;
   background-color: #c00;
   color: #fff;
-  width: 260px;
+  width: 100%;
+  min-width: 260px;
+  max-width: 260px;
   height: 56px;
   white-space: nowrap;
   overflow: hidden;
@@ -60,7 +70,25 @@ const FlightBookingSearchBtn = styled.button`
 `
 
 const FlightBooking = ({ flightLocation, flightMembers, flightDates }) => {
-  console.log('FLIGHT DATES', flightDates)
+  const { origin, destination } = flightLocation
+  const { start } = flightDates
+  const { adults, children, infants } = flightMembers
+
+  const goToSearch = () => {
+    const flightOrigin = origin?.label || origin?.tag || ''
+    const flightDestination = destination?.label || destination?.tag || ''
+    const flightFromDate = moment(start).format('YYYY-MM-DD')
+
+    if (!flightOrigin || !flightDestination || !flightFromDate) {
+      window.alert('Please fill required fields');
+      return;
+    }
+    
+    const searchUrl = `https://www.swiss.com/us/en/Book/Outbound/${flightOrigin}-${flightDestination}/from-${flightFromDate}/adults-${adults || 0}/children-${children || 0}/infants-${infants || 0}/class_economy/al-LX/sidmbvl`
+
+    window.open(searchUrl, self)
+  }
+
   return (
     <FlightBookingContainer>
       
@@ -81,7 +109,7 @@ const FlightBooking = ({ flightLocation, flightMembers, flightDates }) => {
 
       {/* SEARCH BTN */}
       <FlightBookingSearchBtnContainer>
-        <FlightBookingSearchBtn>
+        <FlightBookingSearchBtn onClick={ goToSearch }>
           Search
         </FlightBookingSearchBtn>
       </FlightBookingSearchBtnContainer>

@@ -10,7 +10,12 @@ import Locations from './../public/locations.json'
 const App = ({ updateFlightLocations }) => {
   
   const loadLocations = async () => {
+    try {
+      const locations = await axios.get('https://www.swiss.com/us/en/Suggest/Suggest?q=%query%&m=HP')
+      return locations
+    } catch (err) {
       return Locations
+    }
   }
 
   useEffect(() => {
