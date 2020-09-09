@@ -71,12 +71,13 @@ const FlightBookingSearchBtn = styled.button`
 
 const FlightBooking = ({ flightLocation, flightMembers, flightDates }) => {
   const { origin, destination } = flightLocation
-  const { start } = flightDates
+  const { start, isOneWay } = flightDates
   const { adults, children, infants } = flightMembers
 
   const goToSearch = () => {
-    const flightOrigin = origin?.label || origin?.tag || ''
-    const flightDestination = destination?.label || destination?.tag || ''
+    const flightType = isOneWay ? 'Outbound' : 'Outbound';
+    const flightOrigin = origin?.tag || origin?.label || ''
+    const flightDestination = destination?.tag || destination?.label || ''
     const flightFromDate = moment(start).format('YYYY-MM-DD')
 
     if (!flightOrigin || !flightDestination || !flightFromDate) {
@@ -84,7 +85,7 @@ const FlightBooking = ({ flightLocation, flightMembers, flightDates }) => {
       return;
     }
     
-    const searchUrl = `https://www.swiss.com/us/en/Book/Outbound/${flightOrigin}-${flightDestination}/from-${flightFromDate}/adults-${adults || 0}/children-${children || 0}/infants-${infants || 0}/class_economy/al-LX/sidmbvl`
+    const searchUrl = `https://www.swiss.com/us/en/Book/${flightType}/${flightOrigin}-${flightDestination}/from-${flightFromDate}/adults-${adults || 0}/children-${children || 0}/infants-${infants || 0}/class-economy/al-LX/sidmbvl`
 
     window.open(searchUrl, self)
   }

@@ -4,11 +4,19 @@
     "tag": "MIA"
   },
   {
-    "label": "Sofia",
-    "tag": "SOf"
+    "label": "Buenos Aires",
+    "tag": "BUE"
   },
   {
-    "label": "Holguin",
-    "tag": "HLG"
+    "label": "Mexico City",
+    "tag": "MEX"
+  },
+  {
+    "label": "Milan",
+    "tag": "MIL"
+  },
+  {
+    "label": "Madrid",
+    "tag": "MAD"
   }
 ]
