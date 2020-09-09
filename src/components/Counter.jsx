@@ -11,6 +11,10 @@ const CounterBtn = styled.button`
   width: 30px;
   height: 36px;
   vertical-align: middle;
+  cursor: pointer;
+  &:focus {
+    outline: none !important;
+  }
 `
 const CounterInput = styled.input`
   font-size: 1.25rem;

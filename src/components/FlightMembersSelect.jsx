@@ -104,6 +104,9 @@ const CountableOptionsCloseBtn = styled.button`
   background-color: #fff;
   border: 1px solid #ccc;
   cursor: pointer;
+  &:focus {
+    outline: none !important;
+  }
 `
 
 const FlightMemberSelect = ({ flightMembers, updateFlightMembers }) => {
