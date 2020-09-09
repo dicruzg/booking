@@ -24,6 +24,7 @@ const DatePickerContainer = styled.div`
   justify-content: flex-start;
   visibility: ${ props => props.show ? 'visible' : 'hidden' };
   top: 60px;
+  z-index: 10;
 `
 
 const FlightBookingDatePickerInputContainer = styled.div`
