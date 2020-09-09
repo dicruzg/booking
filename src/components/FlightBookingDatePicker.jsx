@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import DatePicker from 'react-datepicker'
 import styled from 'styled-components'
-import "react-datepicker/dist/react-datepicker.css";
+import "react-datepicker/dist/react-datepicker";
 import moment from 'moment'
 import { connect } from 'react-redux'
 
