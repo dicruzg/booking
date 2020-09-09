@@ -1,9 +1,9 @@
 import React from 'react'
-import store from '../redux/store'
 import { render, screen } from '@testing-library/react'
 import { Provider } from 'react-redux'
 
-import FlightBookingDatePicker from '../components/FlightBookingDatePicker'
+import store from '../src/redux/store'
+import FlightBookingDatePicker from '../src/components/FlightBookingDatePicker.jsx'
 
 describe('FlightBookingDatePicker', () => {
   test('renders FlightBookingDatePicker component', () => {

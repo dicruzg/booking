@@ -1,9 +1,10 @@
 import React from 'react'
-import store from '../redux/store'
 import { render, screen } from '@testing-library/react'
 import { Provider } from 'react-redux'
 
-import FlightBookingLocation from '../components/FlightBookingLocation'
+import store from '../src/redux/store'
+
+import FlightBookingLocation from '../src/components/FlightBookingLocation.jsx'
 
 describe('FlightBookingLocation', () => {
   test('renders FlightBookingLocation component', () => {
