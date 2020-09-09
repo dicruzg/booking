@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { Component, useState, useEffect } from 'react'
 import DatePicker from 'react-datepicker'
 import styled from 'styled-components'
 import "react-datepicker/dist/react-datepicker.css";
 import moment from 'moment'
 import { connect } from 'react-redux'
+import onClickOutside from "react-onclickoutside"
 
 import { InputContainer, InputLabel } from './Input.jsx'
 
@@ -118,75 +119,96 @@ const DatePickerInput = ({ date, label, readonly, onFocus }) => {
   )
 }
 
-const FlightBookingDatePicker = ({ updateFlightDates, updateFlightType, flightDates }) => {
-  const { isOneWay, start, end } = flightDates
-
-  const [ showDatepicker, setShowDatepicker ] = useState(false)
-
-  const handleStartDateChanged = (date) => {
-    updateFlightDates({start: date})
+class FlightBookingDatePicker extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showDatepicker: false
+    }
   }
 
-  const handleEndDateChanged = (date) => {
-    setShowDatepicker(false)
-    updateFlightDates({end: date})
+  handleClickOutside(evt) {
+    this.setShowDatepicker(false)
+  };
+
+  setShowDatepicker(status) {
+    this.setState({ showDatepicker: status })
   }
 
-  const startDatePickerProps = ! isOneWay 
-    ? {
-        selectsStart: true,
-        startDate: start,
-        endDate: end,
-        minDate: new Date()
+  render() {
+    const { showDatepicker } = this.state
+    const { updateFlightDates, updateFlightType, flightDates } = this.props
+    const { isOneWay, start, end } = flightDates
+
+    const handleStartDateChanged = (date) => {
+      const updateDate = {
+        start: date,
+        end: moment(date) > moment(end) ? date : end
       }
-    : {}
-
-    const endDatePickerProps = {
-      selectsEnd: true,
-      startDate: start,
-      endDate: end,
-      minDate: start
+      updateFlightDates(updateDate)
     }
 
-  return (
-    <FlightBookingDatePickerContainer>
-      {/* HOLD THE DATEPICKERS INPUTS */}
-      <FlightBookingDatePickerInputContainer>
-        {/* START DATE */}
-        <InputContainer>
-          <DatePickerInput 
-            date={start} 
-            label={ isOneWay ? 'One-way' : 'Outbound flight' }
-            readonly
-            onFocus={ () => setShowDatepicker(true)} />
-        </InputContainer>
-        <FlightTypeSwitchContainer>
-          <FlightTypeSwitch onClick={ () => updateFlightType(true) } active={ isOneWay }>
-            <FlightTypeIcon src={OneWayIcon} />
-          </FlightTypeSwitch>
-          <FlightTypeSwitch onClick={ () => updateFlightType(false) } active={ !isOneWay }>
-            <FlightTypeIcon src={TwoWayIcon} />
-          </FlightTypeSwitch>
-        </FlightTypeSwitchContainer>
-        {/* END DATE */}
-        <InputContainer paddingLeft="1.0rem" disabled={ isOneWay } >
-          <DatePickerInput 
-            date={ end } 
-            label="Return Flight" 
-            readonly
-            onFocus={ isOneWay ? null : () => setShowDatepicker(true) } />
-        </InputContainer>
-      </FlightBookingDatePickerInputContainer>
+    const handleEndDateChanged = (date) => {
+      this.setShowDatepicker(false)
+      updateFlightDates({end: date})
+    }
 
-      {/* HOLD THE DATEPICKERS CALENDARS */}
-      <DatePickerContainer show={ showDatepicker }>
-        <DatePicker selected={ start } onChange={ handleStartDateChanged } { ...startDatePickerProps } inline />
-        { !isOneWay ? (
-          <DatePicker selected={ end } onChange={ handleEndDateChanged } { ...endDatePickerProps } inline/>
-        ) : null}
-      </DatePickerContainer>
-    </FlightBookingDatePickerContainer>
-  )
+    const startDatePickerProps = ! isOneWay 
+      ? {
+          selectsStart: true,
+          startDate: start,
+          endDate: end,
+          minDate: new Date()
+        }
+      : {}
+
+      const endDatePickerProps = {
+        selectsEnd: true,
+        startDate: start,
+        endDate: end,
+        minDate: start
+      }
+
+    return (
+      <FlightBookingDatePickerContainer>
+        {/* HOLD THE DATEPICKERS INPUTS */}
+        <FlightBookingDatePickerInputContainer>
+          {/* START DATE */}
+          <InputContainer>
+            <DatePickerInput 
+              date={start} 
+              label={ isOneWay ? 'One-way' : 'Outbound flight' }
+              readonly
+              onFocus={ () => this.setShowDatepicker(true)} />
+          </InputContainer>
+          <FlightTypeSwitchContainer>
+            <FlightTypeSwitch onClick={ () => updateFlightType(true) } active={ isOneWay }>
+              <FlightTypeIcon src={OneWayIcon} />
+            </FlightTypeSwitch>
+            <FlightTypeSwitch onClick={ () => updateFlightType(false) } active={ !isOneWay }>
+              <FlightTypeIcon src={TwoWayIcon} />
+            </FlightTypeSwitch>
+          </FlightTypeSwitchContainer>
+          {/* END DATE */}
+          <InputContainer paddingLeft="1.0rem" disabled={ isOneWay } >
+            <DatePickerInput 
+              date={ end } 
+              label="Return Flight" 
+              readonly
+              onFocus={ isOneWay ? null : () => this.setShowDatepicker(true) } />
+          </InputContainer>
+        </FlightBookingDatePickerInputContainer>
+
+        {/* HOLD THE DATEPICKERS CALENDARS */}
+        <DatePickerContainer show={ showDatepicker }>
+          <DatePicker selected={ start } onChange={ handleStartDateChanged } { ...startDatePickerProps } inline />
+          { !isOneWay ? (
+            <DatePicker selected={ end } onChange={ handleEndDateChanged } { ...endDatePickerProps } inline/>
+          ) : null}
+        </DatePickerContainer>
+      </FlightBookingDatePickerContainer>
+    )
+  }
 }
 
 const mapStateToProps = state => ({
@@ -198,4 +220,4 @@ const mapDispatchToProps = dispatch => ({
   updateFlightType: (payload) => dispatch(updateFlightType(payload))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(FlightBookingDatePicker)
+export default connect(mapStateToProps, mapDispatchToProps)(onClickOutside(FlightBookingDatePicker))

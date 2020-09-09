@@ -93,6 +93,9 @@ input, label, button {
   opacity: 0.5;
   color: #fff !important;
 }
+.react-datepicker__day--keyboard-selected {
+  background-color: rgb(180,180,180);
+}
 .react-datepicker__day--selected,
 .react-datepicker__day:hover {
   background-color: #c00c !important;
