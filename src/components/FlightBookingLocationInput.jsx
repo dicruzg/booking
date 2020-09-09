@@ -53,7 +53,7 @@ const LocationInput = ({ label, locations, currentLocation, onSelected }) => {
     setLocation(undefined)
     filterMatchingLocations(value)
     if (!value) {
-      handleLocationUpdate(undefined)
+      handleLocationUpdate()
     }
   }
 
@@ -78,7 +78,7 @@ const LocationInput = ({ label, locations, currentLocation, onSelected }) => {
      : ''
   }
 
-  const handleLocationUpdate = (selectedLocation) => {
+  const handleLocationUpdate = (selectedLocation, searchQuery) => {
     if (selectedLocation) {
       onSelected(selectedLocation)
     } else if (searchQuery) {
