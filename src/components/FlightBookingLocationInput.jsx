@@ -52,6 +52,9 @@ const LocationInput = ({ label, locations, currentLocation, onSelected }) => {
     setSearchQuery(value)
     setLocation(undefined)
     filterMatchingLocations(value)
+    if (!value) {
+      handleLocationUpdate(undefined)
+    }
   }
 
   const filterMatchingLocations = (searchQuery) => {
