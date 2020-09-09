@@ -8,6 +8,8 @@ import { connect } from 'react-redux'
 import { InputContainer, InputLabel } from './Input.jsx'
 
 import { updateFlightDates, updateFlightType } from '../redux/actions'
+import OneWayIcon from './../../public/img/one-way.svg'
+import TwoWayIcon from './../../public/img/two-way.svg'
 
 const FlightBookingDatePickerContainer = styled.div`
   display: flex;
@@ -75,6 +77,15 @@ const FlightTypeSwitch = styled.span`
       `
     }
   }
+`
+
+const FlightTypeIcon = styled.img`
+  height: 1.2rem;
+  width: 1.2rem;
+  opacity: 0.5;
+  position: relative;
+  top: 0.2rem;
+  left: 0;
 `
 
 const formatDate = (dt) => {
@@ -149,8 +160,12 @@ const FlightBookingDatePicker = ({ updateFlightDates, updateFlightType, flightDa
             onFocus={ () => setShowDatepicker(true)} />
         </InputContainer>
         <FlightTypeSwitchContainer>
-          <FlightTypeSwitch onClick={ () => updateFlightType(true) } active={ isOneWay }>A</FlightTypeSwitch>
-          <FlightTypeSwitch onClick={ () => updateFlightType(false) } active={ !isOneWay }>B</FlightTypeSwitch>
+          <FlightTypeSwitch onClick={ () => updateFlightType(true) } active={ isOneWay }>
+            <FlightTypeIcon src={OneWayIcon} />
+          </FlightTypeSwitch>
+          <FlightTypeSwitch onClick={ () => updateFlightType(false) } active={ !isOneWay }>
+            <FlightTypeIcon src={TwoWayIcon} />
+          </FlightTypeSwitch>
         </FlightTypeSwitchContainer>
         {/* END DATE */}
         <InputContainer paddingLeft="1.0rem" disabled={ isOneWay } >
