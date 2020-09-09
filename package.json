@@ -32,11 +32,8 @@
     "file-loader": "^6.1.0",
     "html-loader": "^1.3.0",
     "html-webpack-plugin": "^4.4.1",
-<<<<<<< HEAD
     "style-loader": "^1.2.1",
-=======
     "jest": "^26.4.2",
->>>>>>> added unity test
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0"
